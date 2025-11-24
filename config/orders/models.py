@@ -26,7 +26,7 @@ class Order(models.Model):
 
 # Model for ordered item
 class OrderedItem(models.Model):
-    product = models.ForeignKey(Product,related_name='ordered_item',null=True,on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product,related_name='ordered_item',null=True,  on_delete=models.SET_NULL)
     quantity = models.IntegerField(default=1)
     owner = models.ForeignKey(Order,on_delete=models.CASCADE,related_name='ordered_customer')
 

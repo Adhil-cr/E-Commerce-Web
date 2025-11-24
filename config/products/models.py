@@ -9,7 +9,7 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10,decimal_places=2)
     description = models.TextField(max_length=200)
-    product_image = models.ImageField(upload_to='media/')
+    product_image = models.ImageField(upload_to='products/')
 
     priority = models.IntegerField(default=0)
     delete_status = models.IntegerField(choices=DELETE_CHOICES,default=LIVE,db_index=True)
