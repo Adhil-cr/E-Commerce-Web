@@ -1,5 +1,5 @@
 ## 🧠 Mind Map  
-![Mind Map](https://raw.githubusercontent.com/Adhil-cr/E-Commerce-Web/main/mindmap.png)
+![Mind Map] ( https://github.com/Adhil-cr/E-Commerce-Web/blob/fc9ac19617369226106c4684590de85af1da94ec/Mind%20map.png )
 
 ## 🗂 ERD Flowchart  
-![ERD](https://raw.githubusercontent.com/Adhil-cr/E-Commerce-Web/main/erd_flowchart.png)
+![ERD] ( https://github.com/Adhil-cr/E-Commerce-Web/blob/fc9ac19617369226106c4684590de85af1da94ec/Data%20model%20Flowchart%20ERD.png )
