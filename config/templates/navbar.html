@@ -1,0 +1,75 @@
+<nav style="
+    padding: 16px 40px; 
+    background: #111827; 
+    color: white; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    
+    position: sticky; 
+    top: 0; 
+    z-index: 999;  /* stays on top of everything */
+">
+
+    <!-- Logo -->
+    <div>
+        <a href="/" 
+           style="
+                color:white; 
+                text-decoration:none; 
+                font-weight:600; 
+                font-size:22px;
+                letter-spacing: 1px;
+           ">
+           MyShop
+        </a>
+    </div>
+
+    <!-- Nav Links -->
+    <div style="display:flex; gap: 28px; font-size: 15px;">
+
+        <a href="/" 
+           style="color:white; text-decoration:none; transition:0.3s;"
+           onmouseover="this.style.color='#2563EB'"
+           onmouseout="this.style.color='white'">
+           Home
+        </a>
+
+        <a href="/products/" 
+           style="color:white; text-decoration:none; transition:0.3s;"
+           onmouseover="this.style.color='#2563EB'"
+           onmouseout="this.style.color='white'">
+           Products
+        </a>
+
+        <a href="/cart/" 
+           style="color:white; text-decoration:none; transition:0.3s;"
+           onmouseover="this.style.color='#2563EB'"
+           onmouseout="this.style.color='white'">
+           Cart
+        </a>
+
+        <a href="/customers/login/" 
+           style="color:white; text-decoration:none; transition:0.3s;"
+           onmouseover="this.style.color='#2563EB'"
+           onmouseout="this.style.color='white'">
+           Login
+        </a>
+
+        <a href="/customers/signup/" 
+           style="
+                padding: 8px 16px;
+                background:#2563EB;
+                color:white;
+                text-decoration:none;
+                border-radius:6px;
+                transition:0.3s;
+           "
+           onmouseover="this.style.background='#1E40AF'"
+           onmouseout="this.style.background='#2563EB'">
+           Signup
+        </a>
+
+    </div>
+</nav>

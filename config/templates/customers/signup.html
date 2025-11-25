@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %} Signup - E-Commerce {% endblock %}
+
+{% block content %}
+
+<div style="
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+">
+
+    <div style="
+        width: 380px;
+        background: white;
+        padding: 30px 35px;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    ">
+
+        <h2 style="
+            text-align:center;
+            margin-bottom: 20px;
+            color:#111827;
+            font-weight:600;
+        ">
+            Create Account
+        </h2>
+
+        <!-- Show Django messages -->
+        {% if messages %}
+            <div style="margin-bottom:10px;">
+                {% for m in messages %}
+                    <p style="color:red; font-size:14px;">{{ m }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" style="display:flex; flex-direction:column; gap:15px;">
+            {% csrf_token %}
+
+            <!-- ---------- USER FORM FIELDS ---------- -->
+
+            <div>
+                {{ uform.email.label_tag }}
+                {{ uform.email }}
+                {% for e in uform.email.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ uform.password.label_tag }}
+                {{ uform.password }}
+                {% for e in uform.password.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ uform.confirm_password.label_tag }}
+                {{ uform.confirm_password }}
+                {% for e in uform.confirm_password.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- ---------- CUSTOMER FORM FIELDS ---------- -->
+
+            <div>
+                {{ cform.name.label_tag }}
+                {{ cform.name }}
+                {% for e in cform.name.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ cform.phone.label_tag }}
+                {{ cform.phone }}
+                {% for e in cform.phone.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ cform.address.label_tag }}
+                {{ cform.address }}
+                {% for e in cform.address.errors %}
+                    <span style="color:red; font-size:13px;">{{ e }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Signup Button -->
+            <button type="submit"
+                style="
+                    padding:12px;
+                    margin-top:10px;
+                    background:#2563EB;
+                    color:white;
+                    border:none;
+                    border-radius:8px;
+                    font-size:16px;
+                    font-weight:600;
+                    cursor:pointer;
+                    transition:0.3s;
+                "
+                onmouseover="this.style.background='#1E40AF'"
+                onmouseout="this.style.background='#2563EB'">
+                Signup
+            </button>
+
+        </form>
+
+        <p style="margin-top: 18px; text-align:center; font-size:14px;">
+            Already have an account?
+            <a href="/customers/login/" 
+               style="color:#2563EB; text-decoration:none; font-weight:500;"
+               onmouseover="this.style.textDecoration='underline'"
+               onmouseout="this.style.textDecoration='none'">
+               Login
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

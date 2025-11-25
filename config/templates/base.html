@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}E-Commerce{% endblock %}</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Theme -->
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #F3F4F6; /* clean modern gray */
+        }
+        main {
+            min-height: 70vh; /* ensures content area stays large */
+        }
+    </style>
+
+    <style>
+    .input-field {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+        background: #f9fafb;
+        outline: none;
+        transition: 0.3s;
+        margin-top: 5px;
+    }
+
+    .input-field:focus {
+        border-color: #2563EB;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        background: white;
+    }
+
+    label {
+        font-weight: 500;
+        color: #111827;
+        margin-bottom: 4px;
+        display: block;
+    }
+</style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+
+
+
+    <!-- Main Page Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+</body>
+</html>
