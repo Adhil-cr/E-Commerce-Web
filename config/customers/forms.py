@@ -2,6 +2,20 @@ from django import forms
 from customers.models import Customer
 from django.contrib.auth.models import User
 
+class LoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class':'input-field',
+         'placeholder': 'Enter your email'
+        })
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'input-field',
+            'placeholder': 'Enter your password'
+        })
+    )
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer

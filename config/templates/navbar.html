@@ -6,12 +6,10 @@
     justify-content: space-between; 
     align-items: center;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    
     position: sticky; 
     top: 0; 
-    z-index: 999;  /* stays on top of everything */
+    z-index: 999;
 ">
-
     <!-- Logo -->
     <div>
         <a href="/" 
@@ -50,26 +48,54 @@
            Cart
         </a>
 
-        <a href="/customers/login/" 
-           style="color:white; text-decoration:none; transition:0.3s;"
-           onmouseover="this.style.color='#2563EB'"
-           onmouseout="this.style.color='white'">
-           Login
-        </a>
+        {% if request.user.is_authenticated %}
 
-        <a href="/customers/signup/" 
-           style="
-                padding: 8px 16px;
-                background:#2563EB;
-                color:white;
-                text-decoration:none;
-                border-radius:6px;
-                transition:0.3s;
-           "
-           onmouseover="this.style.background='#1E40AF'"
-           onmouseout="this.style.background='#2563EB'">
-           Signup
-        </a>
+            <!-- Hi Username -->
+            <span style="color:#E2E8F0; font-size:14px;">
+                {{ request.user.username }}
+            </span>
+
+            <!-- Logout Button -->
+             <a href="/customers/logout/"
+               style="
+                    padding: 8px 16px;
+                    background:#DC2626;
+                    color:white;
+                    text-decoration:none;
+                    border-radius:6px;
+                    transition:0.3s;
+               "
+               onmouseover="this.style.background='#B91C1C'"
+               onmouseout="this.style.background='#DC2626'">
+               Logout
+            </a>
+
+        {% else %}
+
+            <!-- Login -->
+            <a href="/customers/login/" 
+               style="color:white; text-decoration:none; transition:0.3s;"
+               onmouseover="this.style.color='#2563EB'"
+               onmouseout="this.style.color='white'">
+               Login
+            </a>
+
+            <!-- Signup Button -->
+            <a href="/customers/signup/" 
+               style="
+                    padding: 8px 16px;
+                    background:#2563EB;
+                    color:white;
+                    text-decoration:none;
+                    border-radius:6px;
+                    transition:0.3s;
+               "
+               onmouseover="this.style.background='#1E40AF'"
+               onmouseout="this.style.background='#2563EB'">
+               Signup
+            </a>
+
+        {% endif %}
 
     </div>
 </nav>

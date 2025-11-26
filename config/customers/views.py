@@ -2,9 +2,36 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from .models import Customer
 from django.contrib import messages
-from .forms import CustomerForm,UserRegisterForm
+from .forms import CustomerForm,UserRegisterForm,LoginForm
+from django.contrib.auth import login,authenticate
+from django.contrib.auth import logout
+
 
 # Create your views here.
+def login_page(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request, username=email, password=password)
+
+            if user is not None:
+                login(request,user)
+                messages.success(request,"Login Successful!")
+                return redirect('home')
+            else:
+                messages.error(request,"Invalide email or password")
+                return redirect('login')
+    else:
+        form = LoginForm()
+
+    
+    return render(request,'customers/login.html',{'form':form})
+
+
 
 def signup(request):
     if request.method == "POST":
@@ -47,5 +74,6 @@ def signup(request):
         'cform':cform
     })
 
-def login(request):
-    return render(request,'customers/login.html')
+def logout_page(request):
+    logout(request)
+    return redirect('login') 
