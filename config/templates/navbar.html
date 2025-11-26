@@ -1,101 +1,171 @@
 <nav style="
-    padding: 16px 40px; 
-    background: #111827; 
-    color: white; 
-    display: flex; 
-    justify-content: space-between; 
+    padding: 14px 40px;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    position: sticky; 
-    top: 0; 
+    position: sticky;
+    top: 0;
     z-index: 999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 ">
-    <!-- Logo -->
-    <div>
+
+    <!-- LOGO -->
+    <a href="/" 
+       style="color:white; font-size:22px; font-weight:700; text-decoration:none;">
+       TechHive
+    </a>
+
+    <!-- NAV ICONS -->
+    <div style="display:flex; gap: 28px; align-items:center;">
+
+        <!-- HOME ICON -->
         <a href="/" 
-           style="
-                color:white; 
-                text-decoration:none; 
-                font-weight:600; 
-                font-size:22px;
-                letter-spacing: 1px;
-           ">
-           MyShop
-        </a>
-    </div>
+            style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+            onmouseout="this.style.background='transparent'">
 
-    <!-- Nav Links -->
-    <div style="display:flex; gap: 28px; font-size: 15px;">
-
-        <a href="/" 
-           style="color:white; text-decoration:none; transition:0.3s;"
-           onmouseover="this.style.color='#2563EB'"
-           onmouseout="this.style.color='white'">
-           Home
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 fill="none" viewBox="0 0 24 24" stroke-width="2" 
+                 stroke="currentColor" style="width:22px; height:22px;">
+                <path stroke-linecap="round" stroke-linejoin="round" 
+                      d="M3 12l8-8 8 8M4 10v10h6v-6h4v6h6V10" />
+            </svg>
         </a>
 
+        <!-- PRODUCTS ICON -->
         <a href="/products/" 
-           style="color:white; text-decoration:none; transition:0.3s;"
-           onmouseover="this.style.color='#2563EB'"
-           onmouseout="this.style.color='white'">
-           Products
+            style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+            onmouseout="this.style.background='transparent'">
+
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 fill="none" viewBox="0 0 24 24" stroke-width="2" 
+                 stroke="currentColor" style="width:22px; height:22px;">
+                <path stroke-linecap="round" stroke-linejoin="round" 
+                      d="M20 13V6a2 2 0 0 0-2-2h-3.5M4 13v5a2 2 0 0 0 2 2h3.5m0-18H12m0 0h3.5A2 2 0 0 1 17 6m-5-2v18" />
+            </svg>
         </a>
 
+        <!-- CART ICON -->
         <a href="/cart/" 
-           style="color:white; text-decoration:none; transition:0.3s;"
-           onmouseover="this.style.color='#2563EB'"
-           onmouseout="this.style.color='white'">
-           Cart
+            style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+            onmouseout="this.style.background='transparent'">
+
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 fill="none" viewBox="0 0 24 24" stroke-width="2" 
+                 stroke="currentColor" style="width:22px; height:22px;">
+                <path stroke-linecap="round" stroke-linejoin="round" 
+                      d="M3 3h2l3.6 12.59A2 2 0 0 0 10.5 17h7a2 2 0 0 0 1.9-1.41L21 9H7" />
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+            </svg>
         </a>
 
         {% if request.user.is_authenticated %}
 
-            <!-- Hi Username -->
-            <span style="color:#E2E8F0; font-size:14px;">
-                {{ request.user.username }}
-            </span>
+        <!-- ================= PROFILE DROPDOWN ================= -->
+        <div style="position:relative;">
 
-            <!-- Logout Button -->
-             <a href="/customers/logout/"
-               style="
-                    padding: 8px 16px;
-                    background:#DC2626;
-                    color:white;
-                    text-decoration:none;
+            <!-- BUTTON -->
+            <button onclick="toggleDropdown()" 
+                style="
+                    background:none;
+                    border:none;
+                    color:#e2e8f0;
+                    font-size:15px;
+                    display:flex;
+                    align-items:center;
+                    gap:6px;
+                    cursor:pointer;
+                    padding:8px 12px;
                     border-radius:6px;
-                    transition:0.3s;
-               "
-               onmouseover="this.style.background='#B91C1C'"
-               onmouseout="this.style.background='#DC2626'">
-               Logout
-            </a>
+                "
+                onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+                onmouseout="this.style.background='transparent'">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none" viewBox="0 0 24 24" stroke-width="2"
+                     stroke="currentColor" style="width:20px;height:20px;">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 21H9a2 2 0 01-2-2v-1a6 6 0 0112 0v1a2 2 0 01-2 2zM12 11a4 4 0 100-8 4 4 0 000 8z" />
+                </svg>
+
+                {{ customer.name }}
+                <span style="font-size:12px;">▼</span>
+            </button>
+
+            <!-- MENU -->
+            <div id="dropdownMenu" 
+                 style="
+                    position:absolute;
+                    top:45px;
+                    right:0;
+                    background:white;
+                    width:170px;
+                    border-radius:12px;
+                    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+                    display:none;
+                    padding:8px 0;
+                 ">
+
+                <a href="/customers/profile/"
+                    style="padding:12px 18px; display:block; text-decoration:none; color:#111;"
+                    onmouseover="this.style.background='#F1F5F9'"
+                    onmouseout="this.style.background='transparent'">
+                    Profile
+                </a>
+
+                <a href="/customers/logout/"
+                    style="padding:12px 18px; display:block; text-decoration:none; color:#DC2626;"
+                    onmouseover="this.style.background='#FEE2E2'"
+                    onmouseout="this.style.background='transparent'">
+                    Logout
+                </a>
+            </div>
+        </div>
 
         {% else %}
 
-            <!-- Login -->
-            <a href="/customers/login/" 
-               style="color:white; text-decoration:none; transition:0.3s;"
-               onmouseover="this.style.color='#2563EB'"
-               onmouseout="this.style.color='white'">
-               Login
-            </a>
+        <!-- LOGIN -->
+        <a href="/customers/login/" 
+            style="color:#e2e8f0; text-decoration:none; padding:8px 10px; border-radius:6px;"
+            onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+            onmouseout="this.style.background='transparent'">
+            Login
+        </a>
 
-            <!-- Signup Button -->
-            <a href="/customers/signup/" 
-               style="
-                    padding: 8px 16px;
-                    background:#2563EB;
-                    color:white;
-                    text-decoration:none;
-                    border-radius:6px;
-                    transition:0.3s;
-               "
-               onmouseover="this.style.background='#1E40AF'"
-               onmouseout="this.style.background='#2563EB'">
-               Signup
-            </a>
+        <!-- SIGNUP -->
+        <a href="/customers/signup/"
+           style="
+                padding: 8px 18px;
+                background:#2563EB;
+                color:white;
+                border-radius:8px;
+                text-decoration:none;
+                font-weight:500;
+           "
+           onmouseover="this.style.background='#1D4ED8'"
+           onmouseout="this.style.background='#2563EB'">
+           Signup
+        </a>
 
         {% endif %}
-
     </div>
 </nav>
+
+<!-- SCRIPT FOR DROPDOWN -->
+<script>
+function toggleDropdown() {
+    var menu = document.getElementById("dropdownMenu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+document.addEventListener("click", function(e) {
+    var menu = document.getElementById("dropdownMenu");
+    if (!e.target.closest("button") && !e.target.closest("#dropdownMenu")) {
+        menu.style.display = "none";
+    }
+});
+</script>

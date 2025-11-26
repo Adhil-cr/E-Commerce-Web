@@ -1,104 +1,170 @@
 {% extends 'base.html' %}
-{% block title %} Home - E-Commerce {% endblock %}
+{% block title %} Home - TechHive {% endblock %}
 
 {% block content %}
 
-<!-- ===================== BANNER SECTION ========================== -->
-<section style="width: 100%; display: flex; justify-content: center; margin-bottom: 40px; position: relative; padding-top: 40px; padding-bottom: 40px; background-color: #F3F4F6;">
+<!-- ===================== HERO SECTION ========================== -->
+<section style="
+    width:100%;
+    padding: 60px 0 40px 0;
+    text-align:center;
+    background: #ffffff;
+">
 
-    <div style="position: relative; width: 45%;">
+    <h1 style="
+        font-size: 40px;
+        font-weight: 700;
+        color:#0f172a;
+        margin-bottom: 15px;
+        line-height:1.3;
+    ">
+        Your One-Stop Shop for <span style="color:#2563EB;">Tech & Accessories</span>
+    </h1>
+
+    <p style="
+        font-size: 18px;
+        color:#475569;
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.7;
+    ">
+        Explore the latest gadgets, gaming gear, and premium tech products — delivered fast at the best prices.
+    </p>
+
+    <a href="/products/" 
+       style="
+            display:inline-block;
+            margin-top:26px;
+            padding:14px 28px;
+            background:#2563EB;
+            color:white;
+            font-weight:600;
+            border-radius:10px;
+            font-size:16px;
+            text-decoration:none;
+            box-shadow:0 4px 12px rgba(37,99,235,0.4);
+       "
+       onmouseover="this.style.background='#1D4ED8'"
+       onmouseout="this.style.background='#2563EB'">
+        Shop Now
+    </a>
+
+</section>
+
+
+<!-- ===================== BANNER SECTION ========================== -->
+<section style="
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    padding: 40px 0 50px 0;
+    background: linear-gradient(to bottom, #eceeef, #f3f4f6);
+">
+
+    <div style="
+        position: relative; 
+        width:75%; 
+        max-width:1100px;
+    ">
 
         {% for s in banners %}
-            <img src="{{ s.banner.url }}"
-                class="banner-slide"
-                style="
-                    width: 100%;
-                    border-radius: 16px;
-                    display: {% if forloop.first %}block{% else %}none{% endif %};
-                    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-                ">
+        <img src="{{ s.banner.url }}"
+             class="banner-slide"
+             style="
+                width:100%;
+                border-radius:20px;
+                display: {% if forloop.first %}block{% else %}none{% endif %};
+                box-shadow: 0 12px 28px rgba(0,0,0,0.20);
+                transition: 0.4s ease;
+             ">
         {% endfor %}
 
-        <!-- Left Button -->
-        <button onclick="prevBanner()"
-            style="
-                position:absolute;
-                left:20px;
-                top:50%;
-                transform:translateY(-50%);
-                background:rgba(17,24,39,0.35);
-                border:2px solid white;
-                color:white;
-                font-size:26px;
-                padding:12px 16px;
-                border-radius:50%;
-                cursor:pointer;
-                transition:0.3s;
-                backdrop-filter:blur(6px);
-            "
-            onmouseover="this.style.background='rgba(17,24,39,0.65)'"
-            onmouseout="this.style.background='rgba(17,24,39,0.35)'">
+        <!-- LEFT -->
+        <button onclick="prevBanner()" style="
+            position:absolute;
+            left:20px;
+            top:50%;
+            transform:translateY(-50%);
+            background:rgba(255,255,255,0.25);
+            border:1px solid rgba(255,255,255,0.7);
+            padding:12px 16px;
+            border-radius:50%;
+            cursor:pointer;
+            backdrop-filter:blur(10px);
+            transition:0.3s;
+            color:white;
+            font-size:20px;
+        " onmouseover="this.style.background='rgba(0,0,0,0.5)'"
+          onmouseout="this.style.background='rgba(255,255,255,0.25)'">
             ❮
         </button>
 
-        <!-- Right Button -->
-        <button onclick="nextBanner()"
-            style="
-                position:absolute;
-                right:20px;
-                top:50%;
-                transform:translateY(-50%);
-                background:rgba(17,24,39,0.35);
-                border:2px solid white;
-                color:white;
-                font-size:26px;
-                padding:12px 16px;
-                border-radius:50%;
-                cursor:pointer;
-                transition:0.3s;
-                backdrop-filter:blur(6px);
-            "
-            onmouseover="this.style.background='rgba(17,24,39,0.65)'"
-            onmouseout="this.style.background='rgba(17,24,39,0.35)'">
+        <!-- RIGHT -->
+        <button onclick="nextBanner()" style="
+            position:absolute;
+            right:20px;
+            top:50%;
+            transform:translateY(-50%);
+            background:rgba(255,255,255,0.25);
+            border:1px solid rgba(255,255,255,0.7);
+            padding:12px 16px;
+            border-radius:50%;
+            cursor:pointer;
+            backdrop-filter:blur(10px);
+            transition:0.3s;
+            color:white;
+            font-size:20px;
+        " onmouseover="this.style.background='rgba(0,0,0,0.5)'"
+          onmouseout="this.style.background='rgba(255,255,255,0.25)'">
             ❯
         </button>
 
     </div>
 </section>
 
+
 <script>
-    let slideIndex = 0;
-    const slides = document.getElementsByClassName("banner-slide");
+let slideIndex = 0;
+const slides = document.getElementsByClassName("banner-slide");
 
-    function showSlide(i) {
-        for (let s of slides) s.style.display = "none";
-        slides[i].style.display = "block";
-    }
+function showSlide(i) {
+    for (let s of slides) s.style.display = "none";
+    slides[i].style.display = "block";
+}
 
-    function nextBanner() {
-        slideIndex = (slideIndex + 1) % slides.length;
-        showSlide(slideIndex);
-    }
+function nextBanner() {
+    slideIndex = (slideIndex + 1) % slides.length;
+    showSlide(slideIndex);
+}
 
-    function prevBanner() {
-        slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-        showSlide(slideIndex);
-    }
+function prevBanner() {
+    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+    showSlide(slideIndex);
+}
 </script>
 
+
 <!-- ===================== PRODUCT SECTION ========================== -->
-<section style="padding: 50px; background-color: #F3F4F6;">
+<section style="padding: 60px 50px; background-color: #e2e3e4;">
 
     <h2 style="
-        margin-bottom: 30px; 
-        font-size: 28px; 
-        font-weight: 600;
-        color: #111827;
+        margin-bottom: 8px; 
+        font-size: 30px; 
+        font-weight: 700;
+        color: #0f172a;
     ">Latest Products</h2>
+
+    <p style="
+        font-size:15px;
+        color:#64748b;
+        margin-bottom:35px;
+    ">
+        Hand-picked items just for you
+    </p>
 
     <div style="
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 30px;
     ">
 
@@ -106,20 +172,20 @@
         <div style="
             background: white;
             border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            padding: 22px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.10);
             transition: 0.3s;
             cursor: pointer;
         " 
-        onmouseover="this.style.transform='translateY(-8px)'; 
-                     this.style.boxShadow='0 12px 25px rgba(0,0,0,0.20)'"
+        onmouseover="this.style.transform='translateY(-10px)'; 
+                     this.style.boxShadow='0 16px 32px rgba(0,0,0,0.18)'"
         onmouseout="this.style.transform='translateY(0)'; 
-                    this.style.boxShadow='0 6px 16px rgba(0,0,0,0.12)'">
+                    this.style.boxShadow='0 6px 16px rgba(0,0,0,0.10)'">
 
             <!-- Product Image -->
             <div style="
                 width: 100%;
-                height: 190px;
+                height: 200px;
                 border-radius: 12px;
                 overflow: hidden;
                 margin-bottom: 15px;
@@ -190,5 +256,3 @@
 </section>
 
 {% endblock %}
-
-
