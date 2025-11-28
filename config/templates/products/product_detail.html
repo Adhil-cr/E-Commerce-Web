@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block content %}
+
+<div style="
+    width:100%;
+    padding: 40px;
+    display:flex;
+    gap:35px;
+    justify-content:center;
+    background:#F3F4F6;
+">
+
+    <!-- Smaller Product Image Section -->
+    <div style="
+        flex:0.8;
+        background:white;
+        padding:20px;
+        border-radius:14px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.10);
+        max-width:450px;   /* ← reduced width */
+    ">
+        <img src="{{ product.product_image.url }}" alt="{{ product.title }}"
+             style="
+                width:100%;
+                border-radius:10px;
+                object-fit:cover;
+                transition:0.4s;
+             "
+             onmouseover="this.style.transform='scale(1.05)'"
+             onmouseout="this.style.transform='scale(1)'">
+    </div>
+
+    <!-- Product Content Section -->
+    <div style="flex:1; padding:10px 5px;">
+
+        <h1 style="
+            font-size:28px;
+            font-weight:700;
+            color:#111827;
+            margin-bottom:12px;
+        ">
+            {{ product.title }}
+        </h1>
+
+        <p style="
+            font-size:24px;
+            font-weight:700;
+            color:#2563EB;
+            margin-bottom:15px;
+        ">
+            ₹ {{ product.price }}
+        </p>
+
+        <p style="
+            font-size:16px;
+            color:#4B5563;
+            line-height:1.7;
+            margin-bottom:25px;
+        ">
+            {{ product.description }}
+        </p>
+
+        <a href="/cart/add/{{ product.id }}/"
+            style="
+                display:inline-block;
+                padding:12px 26px;
+                background:#2563EB;
+                color:white;
+                text-decoration:none;
+                font-size:16px;
+                font-weight:600;
+                border-radius:10px;
+                transition:0.3s;
+                box-shadow:0 4px 10px rgba(0,0,0,0.15);
+            "
+            onmouseover="this.style.background='#1E40AF'"
+            onmouseout="this.style.background='#2563EB'">
+            Add to Cart
+        </a>
+
+        <!-- Product edit button(Admin feature) -->
+        <a href="{% url 'product_edit' product.id %}"
+        style="
+                display:inline-block;
+                padding:12px 26px;
+                background:#6B7280;           /* elegant neutral grey */
+                color:white;
+                text-decoration:none;
+                border-radius:10px;
+                font-size:15px;
+                font-weight:600;
+                transition:0.3s;
+                box-shadow:0 4px 10px rgba(0,0,0,0.15);
+                margin-top:14px;
+        "
+        onmouseover="this.style.background='#4B5563'"
+        onmouseout="this.style.background='#6B7280'">
+            Edit Product
+        </a>
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -21,7 +21,7 @@
     <div style="display:flex; gap: 28px; align-items:center;">
 
         <!-- HOME ICON -->
-        <a href="/" 
+        <a href="/" title="Home"
             style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
             onmouseover="this.style.background='rgba(255,255,255,0.08)'"
             onmouseout="this.style.background='transparent'">
@@ -35,7 +35,7 @@
         </a>
 
         <!-- PRODUCTS ICON -->
-        <a href="/products/" 
+        <a href="{% url 'product_list' %}" title="Product List"
             style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
             onmouseover="this.style.background='rgba(255,255,255,0.08)'"
             onmouseout="this.style.background='transparent'">
@@ -48,8 +48,25 @@
             </svg>
         </a>
 
+        <!-- Add products (for admin) -->
+        <a href="{% url 'product_add' %}" title="Add products"
+            style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+            onmouseout="this.style.background='transparent'">
+
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 fill="none" viewBox="0 0 24 24" stroke-width="2" 
+                 stroke="currentColor" style="width:22px; height:22px;">
+                <path stroke-linecap="round" stroke-linejoin="round" 
+                      d="M3 3h2l3.6 12.59A2 2 0 0 0 10.5 17h7a2 2 0 0 0 1.9-1.41L21 9H7" />
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+            </svg>
+        </a>
+        
+
         <!-- CART ICON -->
-        <a href="/cart/" 
+        <a href="/cart/" title="Cart"
             style="color:#e2e8f0; text-decoration:none; padding:8px; border-radius:6px; transition:0.3s;"
             onmouseover="this.style.background='rgba(255,255,255,0.08)'"
             onmouseout="this.style.background='transparent'">

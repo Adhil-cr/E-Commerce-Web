@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block title %}Add Product - TechHive{% endblock %}
+
+{% block content %}
+
+<!-- Inline CSS: modern form field styles (keeps everything in one file) -->
+<style>
+/* Card */
+.form-card{
+  width:100%;
+  max-width:580px;
+  margin:40px auto;
+  background:#ffffff;
+  padding:28px;
+  border-radius:14px;
+  box-shadow:0 12px 30px rgba(15,23,42,0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Labels + helper */
+.form-heading { font-size:20px; font-weight:700; color:#0f172a; margin-bottom:6px; }
+.form-sub { color:#64748b; font-size:14px; margin-bottom:18px; }
+
+/* Inputs */
+.input-field, .textarea-field {
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #e6e9ee;
+  font-size:15px;
+  color:#0f172a;
+  outline:none;
+  transition: box-shadow .18s ease, border-color .18s ease, transform .08s ease;
+  background:#fbfdff;
+}
+
+.input-field:focus, .textarea-field:focus {
+  border-color:#2563EB;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+  transform: translateY(-1px);
+}
+
+/* Textarea */
+.textarea-field { min-height:110px; resize:vertical; }
+
+/* File input styles - hide default, use custom */
+.file-upload {
+  display:flex; gap:12px; align-items:center;
+  background:#f8fafc; border:1px dashed #e6e9ee; padding:12px; border-radius:10px;
+}
+.file-button {
+  background:#2563EB; color:white; padding:8px 14px; border-radius:8px; border:none; cursor:pointer;
+}
+.file-button:hover { background:#1E40AF; }
+
+/* Submit */
+.btn-primary {
+  display:inline-block;
+  padding:12px 20px;
+  background:#2563EB;
+  color:white;
+  border-radius:10px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(37,99,235,0.18);
+}
+.btn-primary:hover { background:#1E40AF; transform:translateY(-2px); }
+
+/* Small error text */
+.field-error { color:#DC2626; font-size:13px; margin-top:6px; }
+
+/* File preview */
+.img-preview { width:100%; max-height:260px; object-fit:cover; border-radius:8px; border:1px solid #eef2f7; }
+
+/* small helpers */
+.row { display:flex; gap:12px; }
+.col { flex:1; }
+
+/* Responsive */
+@media (max-width:720px){
+  .form-card{ padding:20px; margin:20px; }
+  .row{ flex-direction:column; }
+}
+</style>
+
+<section class="form-card">
+
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:18px;">
+    <div>
+      <div class="form-heading">Add New Product</div>
+      <div class="form-sub">Create a product listing for the store</div>
+    </div>
+    <div style="font-size:13px; color:#94a3b8;">TechHive</div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:14px;">
+    {% csrf_token %}
+
+    <!-- Title -->
+    <div>
+      <label style="font-weight:600; font-size:14px; color:#0f172a;">Title</label>
+      {{ form.title }}
+      {% if form.title.errors %}
+        <div class="field-error">{{ form.title.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <!-- Row: Price + Priority -->
+    <div class="row">
+      <div class="col">
+        <label style="font-weight:600; font-size:14px; color:#0f172a;">Price (₹)</label>
+        {{ form.price }}
+        {% if form.price.errors %}
+          <div class="field-error">{{ form.price.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <div style="width:140px;">
+        <label style="font-weight:600; font-size:14px; color:#0f172a;">Priority</label>
+        {{ form.priority }}
+        {% if form.priority.errors %}
+          <div class="field-error">{{ form.priority.errors.0 }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label style="font-weight:600; font-size:14px; color:#0f172a;">Description</label>
+      {{ form.description }}
+      {% if form.description.errors %}
+        <div class="field-error">{{ form.description.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <!-- File upload with preview -->
+    <div>
+      <label style="font-weight:600; font-size:14px; color:#0f172a;">Product Image</label>
+
+      <div style="margin-top:8px;">
+        <div class="file-upload">
+          <div style="flex:1;">
+            <input id="id_product_image" name="product_image" type="file" accept="image/*" style="display:none;">
+            <div style="color:#475569; font-size:14px;">Choose an image (recommended 1200×600)</div>
+          </div>
+
+          <div>
+            <button type="button" class="file-button" onclick="document.getElementById('id_product_image').click()">Choose file</button>
+          </div>
+        </div>
+
+        {% if form.product_image.errors %}
+          <div class="field-error">{{ form.product_image.errors.0 }}</div>
+        {% endif %}
+
+        <div style="margin-top:12px;">
+          <!-- live preview -->
+          <img id="preview" class="img-preview" src="{% if form.instance and form.instance.product_image %}{{ form.instance.product_image.url }}{% else %}#{% endif %}" alt="Preview" {% if not form.instance.product_image %}style="display:none;"{% endif %}>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save button -->
+    <div style="margin-top:6px;">
+      <button type="submit" class="btn-primary">Save Product</button>
+    </div>
+
+  </form>
+</section>
+
+<!-- Small JS for file preview -->
+<script>
+  const fileInput = document.getElementById('id_product_image');
+  const preview = document.getElementById('preview');
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function(e){
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    });
+  }
+</script>
+
+{% endblock %}
