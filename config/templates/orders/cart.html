@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% block title %}Your Cart - TechHive{% endblock %}
+
+{% block content %}
+
+<style>
+.cart-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    font-family: 'Inter', sans-serif;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px 120px 80px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.cart-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+}
+
+.item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.qty-box {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+}
+
+.qty-btn {
+    padding:6px 12px;
+    background:#F3F4F6;
+    border-radius:8px;
+    text-decoration:none;
+    color:#111;
+    font-size:17px;
+    font-weight:700;
+    transition:0.2s;
+}
+
+.qty-btn:hover {
+    background:#E5E7EB;
+}
+
+.price {
+    font-weight:700;
+    color:#2563EB;
+    font-size:17px;
+}
+
+.remove-btn {
+    background:#DC2626;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.remove-btn:hover {
+    background:#B91C1C;
+}
+
+.total-section {
+    margin-top:25px;
+    text-align:right;
+    font-size:22px;
+    font-weight:700;
+    color:#111827;
+}
+
+.checkout-btn {
+    display:inline-block;
+    margin-top:15px;
+    padding:14px 26px;
+    background:#2563EB;
+    color:white;
+    border-radius:10px;
+    font-size:16px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.checkout-btn:hover {
+    background:#1E40AF;
+}
+
+/* Empty Cart */
+.empty-cart {
+    text-align:center;
+    margin-top:50px;
+    font-size:20px;
+    color:#64748B;
+}
+</style>
+
+<h1 style="
+    text-align:center; 
+    margin-top:30px; 
+    font-size:30px; 
+    font-weight:700; 
+    color:#111827;">
+    Your Cart
+</h1>
+
+{% if items %}
+<div class="cart-container">
+
+    {% for item in items %}
+    <div class="cart-item">
+
+        <!-- Image -->
+        <img src="{{ item.product.product_image.url }}" alt="{{ item.product.title }}">
+
+        <!-- Title -->
+        <div class="item-title">{{ item.product.title }}</div>
+
+        <!-- Quantity -->
+        <div class="qty-box">
+            <a href="{% url 'decrease_quantity' item.id %}" class="qty-btn">–</a>
+            <span>{{ item.quantity }}</span>
+            <a href="{% url 'increase_quantity' item.id %}" class="qty-btn">+</a>
+        </div>
+
+        <!-- Total Price -->
+        <div class="price">₹ {{ item.total_price }}</div>
+
+        <!-- Remove -->
+        <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">
+            Remove
+        </a>
+    </div>
+    {% endfor %}
+
+    <div class="total-section">
+        Grand Total: ₹ {{ total }}
+    </div>
+
+    <a href="#" class="checkout-btn">
+        Proceed to Checkout
+    </a>
+
+</div>
+
+{% else %}
+
+<p class="empty-cart">Your cart is empty 🛒</p>
+
+{% endif %}
+
+{% endblock %}
