@@ -81,24 +81,26 @@
         </a>
 
         <!-- Product edit button(Admin feature) -->
-        <a href="{% url 'product_edit' product.id %}"
-        style="
-                display:inline-block;
-                padding:12px 26px;
-                background:#6B7280;           /* elegant neutral grey */
-                color:white;
-                text-decoration:none;
-                border-radius:10px;
-                font-size:15px;
-                font-weight:600;
-                transition:0.3s;
-                box-shadow:0 4px 10px rgba(0,0,0,0.15);
-                margin-top:14px;
-        "
-        onmouseover="this.style.background='#4B5563'"
-        onmouseout="this.style.background='#6B7280'">
-            Edit Product
-        </a>
+         {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'product_edit' product.id %}"
+            style="
+                    display:inline-block;
+                    padding:12px 26px;
+                    background:#6B7280;           /* elegant neutral grey */
+                    color:white;
+                    text-decoration:none;
+                    border-radius:10px;
+                    font-size:15px;
+                    font-weight:600;
+                    transition:0.3s;
+                    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+                    margin-top:14px;
+            "
+            onmouseover="this.style.background='#4B5563'"
+            onmouseout="this.style.background='#6B7280'">
+                Edit Product
+            </a>
+        {% endif %}
 
 
 

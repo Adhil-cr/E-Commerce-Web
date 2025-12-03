@@ -16,6 +16,12 @@ def product_detail(request,id):
 
 # Add new products to site(Admin feature)
 def product_add(request):
+    
+    # Verification is loged user has staff access
+    if not request.user.is_staff :
+        messages.error(request,"Permission Denied.")
+        return redirect('home')
+    
     if request.method == 'POST':
         form = ProductForm(request.POST,request.FILES)
 
@@ -33,6 +39,11 @@ def product_add(request):
 
 # Edit product details(Admin feature)
 def product_edit(request,id):
+    # Verification is loged user has staff access
+    if not request.user.is_staff:
+        messages.error(request,"Permission Denied")
+        return redirect('home')
+    
     product = get_object_or_404(Product,id=id)
 
     if request.method == "POST":
@@ -54,6 +65,11 @@ def product_edit(request,id):
 
 # Delete product 
 def product_delete(request,id):
+    #Verification is logged user has staff access
+    if not request.user.is_staff:
+        messages.error(request,"Permission Denied")
+        return redirect('home')
+    
     product = get_object_or_404(Product,id=id)
     product.delete_status = 0
     product.save()
