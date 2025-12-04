@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Checkout - TechHive{% endblock %}
+
+{% block content %}
+
+<!-- ============ BACK BUTTON ============ -->
+<div style="margin: 20px 0;">
+    <a href="{% url 'cart' %}"
+       style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:600;
+            font-size:15px;
+       "
+       onmouseover="this.style.color='#1E40AF'"
+       onmouseout="this.style.color='#2563eb'">
+        ← Back to Cart
+    </a>
+</div>
+
+
+<!-- ============ CHECKOUT CARD ============ -->
+<section style="
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    font-family: 'Inter', sans-serif;
+">
+
+    <!-- Title -->
+    <h2 style="
+        font-size: 28px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 10px;
+    ">
+        Checkout
+    </h2>
+
+    <p style="color:#64748b; margin-bottom:25px; font-size:15px;">
+        Review your order before placing it.
+    </p>
+
+
+    <!-- ================= TABLE ================= -->
+    <table style="
+        width:100%;
+        border-collapse: collapse;
+        border-radius: 12px;
+        overflow:hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    ">
+        <tr style="background:#f1f5f9; text-align:left;">
+            <th style="padding:14px 12px; font-weight:600; color:#0f172a;">Product</th>
+            <th style="padding:14px 12px; font-weight:600; color:#0f172a;">Qty</th>
+            <th style="padding:14px 12px; font-weight:600; color:#0f172a;">Price</th>
+            <th style="padding:14px 12px; font-weight:600; color:#0f172a;">Total</th>
+        </tr>
+
+        {% for item in items %}
+        <tr style="border-top:1px solid #e5e7eb;">
+            <td style="padding:14px 12px; color:#334155; font-weight:500;">
+                {{ item.product.title }}
+            </td>
+
+            <td style="padding:14px 12px; color:#334155;">
+                {{ item.quantity }}
+            </td>
+
+            <td style="padding:14px 12px; color:#334155;">
+                ₹ {{ item.product.price }}
+            </td>
+
+            <td style="padding:14px 12px; font-weight:600; color:#0f172a;">
+                ₹ {{ item.total_price }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- ============ GRAND TOTAL SECTION ============ -->
+    <div style="
+        margin-top: 30px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding: 20px 0;
+        border-top:1px solid #e5e7eb;
+    ">
+        <h3 style="
+            font-size: 22px;
+            font-weight:700;
+            color:#0f172a;
+        ">
+            Grand Total:
+        </h3>
+
+        <h3 style="
+            font-size: 26px;
+            font-weight:800;
+            color:#2563eb;
+        ">
+            ₹ {{ total }}
+        </h3>
+    </div>
+
+
+    <!-- ============ PLACE ORDER BUTTON ============ -->
+    <a href="{% url 'place_order' %}"
+       style="
+            display:block;
+            width:100%;
+            margin-top:20px;
+            padding:14px 0;
+            background:#2563eb;
+            text-align:center;
+            color:white;
+            text-decoration:none;
+            font-size:17px;
+            font-weight:600;
+            border-radius:10px;
+            box-shadow:0 10px 25px rgba(37,99,235,0.25);
+            transition:0.3s;
+       "
+       onmouseover="this.style.background='#1E40AF'"
+       onmouseout="this.style.background='#2563eb'">
+        Place Order
+    </a>
+
+</section>
+
+{% endblock %}

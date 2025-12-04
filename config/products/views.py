@@ -17,7 +17,7 @@ def product_detail(request,id):
 # Add new products to site(Admin feature)
 def product_add(request):
     
-    # Verification is loged user has staff access
+    # Verifying the user has admin access 
     if not request.user.is_staff :
         messages.error(request,"Permission Denied.")
         return redirect('home')
@@ -39,7 +39,7 @@ def product_add(request):
 
 # Edit product details(Admin feature)
 def product_edit(request,id):
-    # Verification is loged user has staff access
+    # Verification, is loged user has staff access
     if not request.user.is_staff:
         messages.error(request,"Permission Denied")
         return redirect('home')
