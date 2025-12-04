@@ -63,6 +63,71 @@
 
             </a>
         {% endif %}
+
+        <!-- My order icon -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'my_orders' %}"
+            style="
+                    color:white;
+                    padding:8px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    border-radius:8px;
+                    position:relative;
+                    transition:0.25s;
+            "
+            onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+            onmouseout="this.style.background='transparent'">
+
+                <!-- Orders Icon -->
+                <svg xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke-width='1.8'
+                    stroke='currentColor'
+                    style="width:22px; height:22px;">
+                    <path stroke-linecap='round' stroke-linejoin='round'
+                        d='M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7m-18 0l2-2h12l2 2m-16 0h18m-14 4h10m-10 4h7' />
+                </svg>
+
+                <!-- Tooltip -->
+                <span style="
+                    visibility:hidden;
+                    opacity:0;
+                    background:black;
+                    color:white;
+                    font-size:12px;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    position:absolute;
+                    bottom:-28px;
+                    white-space:nowrap;
+                    transition:0.25s;
+                    left:50%;
+                    transform:translateX(-50%);
+                ">My Orders</span>
+
+            </a>
+
+            <!-- Tooltip script -->
+            <script>
+            document.querySelectorAll('a[href="{% url "my_orders" %}"]').forEach(btn => {
+                btn.addEventListener("mouseenter", () => {
+                    const tip = btn.querySelector("span");
+                    tip.style.visibility = "visible";
+                    tip.style.opacity = "1";
+                });
+                btn.addEventListener("mouseleave", () => {
+                    const tip = btn.querySelector("span");
+                    tip.style.opacity = "0";
+                    tip.style.visibility = "hidden";
+                });
+            });
+            </script>
+        {% endif %}
+
+
         
 
         <!-- CART ICON WITH BADGE -->

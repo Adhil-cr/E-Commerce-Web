@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}My Orders - TechHive{% endblock %}
+
+{% block content %}
+
+<style>
+.orders-card {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-confirmed  { background:#FEF3C7; color:#B45309; }
+.badge-processed  { background:#DBEAFE; color:#1D4ED8; }
+.badge-delivered  { background:#DCFCE7; color:#15803D; }
+
+.empty-orders {
+    text-align:center;
+    font-size:18px;
+    color:#6B7280;
+    margin-top:60px;
+}
+
+.orders-table {
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.orders-table th {
+    background:#f1f5f9;
+    padding:14px 12px;
+    text-align:left;
+    font-weight:600;
+    color:#0f172a;
+}
+
+.orders-table td {
+    padding:14px 12px;
+    border-top:1px solid #e5e7eb;
+    color:#334155;
+}
+
+#back-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:600;
+    margin-top:15px;
+    margin-bottom:-10px;
+    font-size:15px;
+}
+
+#back-btn:hover {
+    color:#1E40AF;
+}
+</style>
+
+<!-- Back button -->
+<a id="back-btn" href="/">
+    ← Back to Home
+</a>
+
+<section class="orders-card">
+
+    <h2 style="
+        font-size:28px;
+        font-weight:700;
+        color:#0f172a;
+        margin-bottom:25px;
+    ">
+        My Orders
+    </h2>
+
+    {% if orders %}
+    <table class="orders-table">
+        <tr>
+            <th>Order ID</th>
+            <th>Status</th>
+            <th>Items</th>
+            <th>Date</th>
+        </tr>
+
+        {% for order in orders %}
+        <tr>
+            <td>#{{ order.id }}</td>
+
+            <td>
+                {% if order.order_status == 1 %}
+                    <span class="badge badge-confirmed">Confirmed</span>
+                {% elif order.order_status == 2 %}
+                    <span class="badge badge-processed">Processed</span>
+                {% elif order.order_status == 3 %}
+                    <span class="badge badge-delivered">Delivered</span>
+                {% endif %}
+            </td>
+
+            <td>{{ order.ordered_customer.count }}</td>
+
+            <td>{{ order.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+        <p class="empty-orders">You have no orders yet.</p>
+    {% endif %}
+
+</section>
+
+{% endblock %}

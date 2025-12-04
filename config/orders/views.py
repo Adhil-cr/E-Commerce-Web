@@ -131,6 +131,7 @@ def checkout(request):
 
 # Placing the order 
 def place_order(request):
+    # Checking the user is logged or not 
     if not request.user.is_authenticated:
         messages.info(request, "Please login.")
         return redirect('login')
@@ -150,6 +151,28 @@ def place_order(request):
     messages.success(request, "Order placed successfully!")
     return redirect('order_success')
 
-
+# Redirect to order success full page
 def order_success(request):
     return render(request,'orders/order_success.html')
+
+
+# Fetching logged user orders
+def my_orders(request):
+    # Checking the user is logged or not 
+    if not request.user.is_authenticated:
+        messages.info(request,"Please login to view your orders.")
+        return redirect('login')
+    
+    # fetching logged your profile
+    customer = request.user.customer_profile
+
+     # fetch only confirmed/processed/delivered orders
+    orders = Order.objects.filter(
+        owner=customer,
+        order_status__gte=1   # 1:confirmed, 2:processed, 3:delivered
+    ).order_by('-created_at')
+
+    return render(request,'orders/my_orders.html',{
+        'orders':orders
+    })
+
