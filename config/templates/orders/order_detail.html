@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}Order #{{ order.id }} - TechHive{% endblock %}
+
+{% block content %}
+
+<style>
+.order-card {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.back-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#2563EB;
+    font-weight:600;
+    text-decoration:none;
+    font-size:15px;
+    margin-left:5px;
+}
+.back-btn:hover { color:#1E40AF; }
+
+.order-heading {
+    font-size:28px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:20px;
+}
+
+.badge {
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.badge-confirmed { background:#FEF3C7; color:#B45309; }
+.badge-processed { background:#DBEAFE; color:#1D4ED8; }
+.badge-delivered { background:#DCFCE7; color:#15803D; }
+
+.order-table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+    overflow:hidden;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.order-table th {
+    background:#f1f5f9;
+    padding:14px 12px;
+    text-align:left;
+    font-weight:600;
+    color:#0f172a;
+}
+
+.order-table td {
+    padding:14px 12px;
+    border-top:1px solid #e5e7eb;
+    color:#334155;
+    font-size:15px;
+}
+
+.total-amount {
+    font-size:22px;
+    margin-top:25px;
+    font-weight:700;
+    color:#111827;
+}
+
+.back-orders-btn {
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 22px;
+    border-radius:10px;
+    background:#2563EB;
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.25s;
+}
+.back-orders-btn:hover { background:#1E40AF; }
+</style>
+
+<!-- Back button -->
+<a class="back-btn" href="{% url 'my_orders' %}">
+    ← Back to My Orders
+</a>
+
+<section class="order-card">
+
+    <h2 class="order-heading">
+        Order #{{ order.id }}
+    </h2>
+
+    <!-- ORDER STATUS -->
+    <p style="font-size:16px; margin-bottom:8px;">
+        <strong>Status:</strong>
+        {% if order.order_status == 1 %}
+            <span class="badge badge-confirmed">Confirmed</span>
+        {% elif order.order_status == 2 %}
+            <span class="badge badge-processed">Processed</span>
+        {% elif order.order_status == 3 %}
+            <span class="badge badge-delivered">Delivered</span>
+        {% endif %}
+    </p>
+
+    <p style="font-size:15px; color:#475569;">
+        <strong>Order Date:</strong> 
+        {{ order.created_at|date:"M d, Y · H:i" }}
+    </p>
+
+    <!-- Items Table -->
+    <table class="order-table">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹ {{ item.product.price|floatformat:0|intcomma }}</td>
+            <td>₹ {{ item.product.price|floatformat:0|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p class="total-amount">
+        Total Amount: ₹ {{ total|floatformat:0|intcomma }}
+    </p>
+
+    <a href="{% url 'my_orders' %}" class="back-orders-btn">
+        Back to My Orders
+    </a>
+
+</section>
+
+{% endblock %}

@@ -4,8 +4,8 @@ from products.models import Product
 from django.contrib import messages
 from decimal import Decimal
 from django.db import transaction
-# Create your views here.
 
+# Fetching logged users Active cart ( )
 def cart(request):
     if not request.user.is_authenticated:
         messages.info(request, "Please login to view your cart.")
@@ -32,7 +32,7 @@ def cart(request):
         'total': total
     })
 
-
+# Adding product to logged users cart
 @transaction.atomic
 def add_to_cart(request,product_id):
     if not request.user.is_authenticated:
@@ -72,7 +72,7 @@ def remove_from_cart(request,item_id):
     messages.success(request,"Item remove from the cart")
     return redirect('cart')
 
-
+# + button in in ( Quantity increment )
 def increase_quantity(request,item_id):
     item = get_object_or_404(OrderedItem,id=item_id)
 
@@ -82,7 +82,7 @@ def increase_quantity(request,item_id):
     messages.success(request,"Quantity updated")
     return redirect('cart')
 
-
+# - button in in ( Quantity decrement )
 def decrease_quantity(request,item_id):
     item = get_object_or_404(OrderedItem,id=item_id)
 
@@ -176,3 +176,28 @@ def my_orders(request):
         'orders':orders
     })
 
+# Order Detail Page ( users can click ordered products details )
+def order_detail(request,order_id):
+    
+    # Authenticating 
+    if not request.user.is_authenticated:
+        messages.info(request,'Please login to continue.')
+        return redirect('login')
+    
+    # Fetching logged users details
+    customer = request.user.customer_profile
+
+    # Fetch the order 
+    order = get_object_or_404(Order,id=order_id, owner=customer)
+
+    # Fetch items inside the order
+    items = OrderedItem.objects.filter(owner=order).select_related('product')
+
+    # Calculate total price
+    total = sum(item.product.price * item.quantity for item in items)
+
+    return render(request,'orders/order_detail.html',{
+        'order':order,
+        'items':items,
+        'total':total
+    })

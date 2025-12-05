@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block content %}
@@ -50,7 +51,7 @@
             color:#2563EB;
             margin-bottom:15px;
         ">
-            ₹ {{ product.price }}
+            ₹ {{ product.price |intcomma }}
         </p>
 
         <p style="

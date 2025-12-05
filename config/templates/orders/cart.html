@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load humanize %}
+
 {% block title %}Your Cart - TechHive{% endblock %}
 
 {% block content %}
@@ -143,7 +145,7 @@
         </div>
 
         <!-- Total Price -->
-        <div class="price">₹ {{ item.total_price }}</div>
+        <div class="price">₹ {{ item.total_price |intcomma }}</div>
 
         <!-- Remove -->
         <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">
@@ -153,7 +155,7 @@
     {% endfor %}
 
     <div class="total-section">
-        Grand Total: ₹ {{ total }}
+        Grand Total: ₹ {{ total |intcomma }}
     </div>
 
     <a href="{% url 'checkout' %}" class="checkout-btn">

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %}All Products {% endblock %}
 
 
@@ -87,7 +87,7 @@
                 color:#111827;
                 margin-bottom: 18px;
             ">
-                ₹ {{ product.price }}
+                ₹ {{ product.price |intcomma }}
             </p>
 
             <!-- View Product Button -->
