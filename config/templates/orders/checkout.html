@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}Checkout - TechHive{% endblock %}
-
 {% block content %}
 
 <!-- ============ BACK BUTTON ============ -->
@@ -74,11 +74,11 @@
             </td>
 
             <td style="padding:14px 12px; color:#334155;">
-                ₹ {{ item.product.price }}
+                ₹ {{ item.product.price | intcomma }}
             </td>
 
             <td style="padding:14px 12px; font-weight:600; color:#0f172a;">
-                ₹ {{ item.total_price }}
+                ₹ {{ item.total_price | intcomma }}
             </td>
         </tr>
         {% endfor %}
@@ -107,7 +107,7 @@
             font-weight:800;
             color:#2563eb;
         ">
-            ₹ {{ total }}
+            ₹ {{ total | intcomma }}
         </h3>
     </div>
 

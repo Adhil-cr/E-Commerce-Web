@@ -114,7 +114,23 @@
     font-size:20px;
     color:#64748B;
 }
-</style>
+</style>    
+<div style="margin: 20px 0;">
+    <a href="{% url 'product_list' %}"
+       style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:600;
+            font-size:15px;
+       "
+       onmouseover="this.style.color='#1E40AF'"
+       onmouseout="this.style.color='#2563eb'">
+        ← Back to Home
+    </a>
+</div>
 
 <h1 style="
     text-align:center; 

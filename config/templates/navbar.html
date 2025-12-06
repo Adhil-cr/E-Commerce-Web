@@ -166,6 +166,79 @@
         
         </a>
 
+        <!-- Orders list -->
+        {% if user.is_staff %}
+            <a href="{% url 'admin_orders' %}"
+            style="
+                    color:white;
+                    padding:8px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    border-radius:8px;
+                    position:relative;
+                    transition:0.25s;
+            "
+            onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+            onmouseout="this.style.background='transparent'">
+
+                <!-- Admin Orders Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke-width="1.8" 
+                    stroke="currentColor"
+                    style="width:23px; height:23px;">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12h6m-6 4h6m3 5H6a2 2 0 01-2-2V5a2 
+                            2 0 012-2h3l1 2h4l1-2h3a2 2 0 012 2v14a2 
+                            2 0 01-2 2z" />
+                </svg>
+
+                <!-- Tooltip -->
+                <span style="
+                    visibility:hidden;
+                    opacity:0;
+                    background:black;
+                    color:white;
+                    font-size:12px;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    position:absolute;
+                    bottom:-28px;
+                    white-space:nowrap;
+                    transition:0.25s;
+                    left:50%;
+                    transform:translateX(-50%);
+                ">
+                    Manage Orders
+                </span>
+
+            </a>
+
+            <!-- Tooltip Script -->
+            <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll('a[href="{% url "admin_orders" %}"]').forEach(btn => {
+                    btn.addEventListener("mouseenter", () => {
+                        let tip = btn.querySelector("span");
+                        tip.style.visibility = "visible";
+                        tip.style.opacity = "1";
+                    });
+                    btn.addEventListener("mouseleave", () => {
+                        let tip = btn.querySelector("span");
+                        tip.style.opacity = "0";
+                        tip.style.visibility = "hidden";
+                    });
+                });
+            });
+            </script>
+
+        {% endif %}
+
+            
+
+        <!-- Admin Status icon -->
         {% if user.is_staff %}
             <span style="
                 padding: 4px 10px;

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}Manage Orders - TechHive{% endblock %}
+
+{% block content %}
+
+<style>
+.admin-card {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.admin-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.orders-table th {
+    background: #f1f5f9;
+    padding: 14px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.orders-table td {
+    padding: 14px 12px;
+    border-top: 1px solid #e5e7eb;
+    color: #334155;
+    font-size: 15px;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-confirmed { background:#FEF3C7; color:#B45309; }
+.badge-processed { background:#DBEAFE; color:#1D4ED8; }
+.badge-delivered { background:#DCFCE7; color:#15803D; }
+
+.status-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #CBD5E1;
+    background: #F8FAFC;
+    font-size: 14px;
+    color: #475569;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.status-select:hover {
+    border-color: #2563EB;
+}
+
+.update-btn {
+    padding: 8px 16px;
+    background: #2563EB;
+    color: white;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s;
+}
+.update-btn:hover {
+    background: #1E40AF;
+    transform: translateY(-2px);
+}
+</style>
+
+<div style="margin: 20px 0;">
+    <a href="{% url 'home' %}"
+       style="
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:600;
+            font-size:15px;
+       "
+       onmouseover="this.style.color='#1E40AF'"
+       onmouseout="this.style.color='#2563eb'">
+        ← Back to home
+    </a>
+</div>
+
+<section class="admin-card">
+
+    <h2 class="admin-title">Admin Order Management</h2>
+
+    <table class="orders-table">
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Items</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+
+        {% for order in orders %}
+        <tr>
+            <td>#{{ order.id }}</td>
+
+            <td>{{ order.owner.name }}</td>
+
+            <td>
+                {% if order.order_status == 1 %}
+                    <span class="badge badge-confirmed">Confirmed</span>
+                {% elif order.order_status == 2 %}
+                    <span class="badge badge-processed">Processed</span>
+                {% elif order.order_status == 3 %}
+                    <span class="badge badge-delivered">Delivered</span>
+                {% endif %}
+            </td>
+
+            <td>{{ order.ordered_customer.count }}</td>
+
+            <td>{{ order.created_at|date:"M d, Y" }}</td>
+
+            <td>
+                <form method="POST" style="display:flex; gap:10px; align-items:center;">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+
+                    <select name="status" class="status-select">
+                        <option value="1" {% if order.order_status == 1 %}selected{% endif %}>Confirmed</option>
+                        <option value="2" {% if order.order_status == 2 %}selected{% endif %}>Processed</option>
+                        <option value="3" {% if order.order_status == 3 %}selected{% endif %}>Delivered</option>
+                    </select>
+
+                    <button type="submit" class="update-btn">
+                        Update
+                    </button>
+                </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+</section>
+
+{% endblock %}

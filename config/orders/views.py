@@ -201,3 +201,51 @@ def order_detail(request,order_id):
         'items':items,
         'total':total
     })
+
+
+# Admin order list view
+def admin_orders(request):
+    # Admin Authentication
+    if not request.user.is_staff:
+        messages.error(request,"Access denied.")
+        return redirect('home')
+    
+    if request.method == "POST":
+        order_id = request.POST.get("order_id")
+        new_status = int(request.POST.get("status"))
+        order = get_object_or_404(Order,id=order_id)
+        order.order_status = new_status
+        order.save()
+        messages.success(request,f"Order {order_id} Updated successfully!")
+
+    
+    # Fetch all orders except cart
+    orders = Order.objects.filter(order_status__gte=1).order_by('-created_at')
+
+    return render(request,'orders/admin_orders.html',{
+        'orders':orders
+    })
+
+
+# # Admin Order status control 
+# def admin_update_order(request,order_id):
+#     # Admin Authentication
+#     if not request.user.is_staff:
+#         messages.error(request,"Access denied")
+#         return redirect('home')
+    
+#     # fetching the order detials corresponding id
+#     order = get_object_or_404(Order,id=order_id)
+
+#     if request.method == "POST":
+#         new_status = int(request.POST.get("status"))
+#         order.order_status = new_status
+#         order.save()
+
+#         messages.success(request,'Order status updated!')
+#         return redirect('admin_orders')
+    
+#     return render(request,'orders/admin_update_order.html',{
+#         'order':order   
+#     })
+
