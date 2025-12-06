@@ -199,7 +199,6 @@ def my_orders(request):
 
 # Order Detail Page ( users can click ordered products details )
 def order_detail(request,order_id):
-    
     # Authenticating 
     if not request.user.is_authenticated:
         messages.info(request,'Please login to continue.')
@@ -247,26 +246,21 @@ def admin_orders(request):
         'orders':orders
     })
 
-
-# # Admin Order status control 
-# def admin_update_order(request,order_id):
-#     # Admin Authentication
-#     if not request.user.is_staff:
-#         messages.error(request,"Access denied")
-#         return redirect('home')
+# Admin order details page
+def admin_order_detail(request,order_id):
+    if not request.user.is_staff:
+        messages.error(request,"Access denid!")
+        return redirect('home')
     
-#     # fetching the order detials corresponding id
-#     order = get_object_or_404(Order,id=order_id)
+    # Fetching the clicked order details 
+    order = get_object_or_404(Order, id=order_id)
+    items = OrderedItem.objects.filter(owner=order).select_related('product')
 
-#     if request.method == "POST":
-#         new_status = int(request.POST.get("status"))
-#         order.order_status = new_status
-#         order.save()
+    # Total amout for the order
+    total = sum(item.product.price * item.quantity for item in items)
 
-#         messages.success(request,'Order status updated!')
-#         return redirect('admin_orders')
-    
-#     return render(request,'orders/admin_update_order.html',{
-#         'order':order   
-#     })
-
+    return render(request, 'orders/admin_order_detail.html', {
+        'order': order,
+        'items': items,
+        'total': total
+    })

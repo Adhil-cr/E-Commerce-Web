@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Order #{{ order.id }} (Admin) - TechHive{% endblock %}
+
+{% block content %}
+
+<style>
+.admin-order-card {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    font-family: 'Inter', sans-serif;
+}
+
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 18px;
+}
+
+.info-text {
+    font-size: 15px;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-confirmed { background:#FEF3C7; color:#B45309; }
+.badge-processed { background:#DBEAFE; color:#1D4ED8; }
+.badge-delivered { background:#DCFCE7; color:#15803D; }
+
+.order-table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+    overflow:hidden;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.order-table th {
+    background:#f1f5f9;
+    padding:14px 12px;
+    text-align:left;
+    font-weight:600;
+    color:#0f172a;
+}
+
+.order-table td {
+    padding:14px 12px;
+    border-top:1px solid #e5e7eb;
+    color:#334155;
+}
+
+.total-amount {
+    font-size:22px;
+    font-weight:700;
+    color:#111827;
+    margin-top:25px;
+}
+
+.back-btn {
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 22px;
+    background:#2563EB;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.25s;
+}
+.back-btn:hover {
+    background:#1E40AF;
+}
+</style>
+
+<section class="admin-order-card">
+
+    <h2 class="section-title">Order #{{ order.id }} </h2>
+
+    <!-- CUSTOMER INFO -->
+    <div style="margin-bottom:20px;">
+        <p class="info-text"><strong>Customer:</strong> {{ order.owner.name }}</p>
+        <p class="info-text"><strong>Phone:</strong> {{ order.owner.phone }}</p>
+        <p class="info-text"><strong>Address:</strong> {{ order.owner.address }}</p>
+    </div>
+
+    <!-- STATUS -->
+    <div style="margin-bottom:20px;">
+        <p class="info-text"><strong>Status:</strong>
+            {% if order.order_status == 1 %}
+                <span class="badge badge-confirmed">Confirmed</span>
+            {% elif order.order_status == 2 %}
+                <span class="badge badge-processed">Processed</span>
+            {% elif order.order_status == 3 %}
+                <span class="badge badge-delivered">Delivered</span>
+            {% endif %}
+        </p>
+
+        <p class="info-text">
+            <strong>Order Date:</strong> {{ order.created_at|date:"M d, Y · H:i" }}
+        </p>
+    </div>
+
+    <!-- ITEMS TABLE -->
+    <table class="order-table">
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹ {{ item.product.price|intcomma }}</td>
+            <td>₹ {{ total|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p class="total-amount">
+        Grand Total: ₹ {{ total|intcomma }}
+    </p>
+
+    <a href="{% url 'admin_orders' %}" class="back-btn">
+        ← Back to All Orders
+    </a>
+
+</section>
+
+{% endblock %}
