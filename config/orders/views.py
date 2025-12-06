@@ -10,6 +10,11 @@ def cart(request):
     if not request.user.is_authenticated:
         messages.info(request, "Please login to view your cart.")
         return redirect('login')
+    
+    elif request.user.is_staff:
+        messages.error(request, "Admin cannot access cart.")
+        return redirect('home')
+
 
     customer = request.user.customer_profile
 
@@ -39,6 +44,10 @@ def add_to_cart(request,product_id):
         messages.info(request, "Please login to add items to cart.")
         return redirect('login')
     
+    elif request.user.is_staff:
+        messages.error(request, "Admin cannot access cart.")
+        return redirect('home')
+    
     # get the customer and the product
     customer = request.user.customer_profile
     product = get_object_or_404(Product,id=product_id, delete_status=1)
@@ -60,6 +69,10 @@ def remove_from_cart(request,item_id):
     if not request.user.is_authenticated:
         messages.info(request,'Please login')
         return redirect('login')
+    
+    elif request.user.is_staff:
+        messages.error(request, "Admin cannot access cart.")
+        return redirect('home')
     
     item = get_object_or_404(OrderedItem,id=item_id)
 
@@ -103,6 +116,10 @@ def checkout(request):
         messages.info(request,"Please login to checkout.")
         return redirect('login')
     
+    elif request.user.is_staff:
+        messages.error(request, "Admin cannot access cart.")
+        return redirect('home')
+    
     # logged user profile
     customer = request.user.customer_profile
 
@@ -135,6 +152,10 @@ def place_order(request):
     if not request.user.is_authenticated:
         messages.info(request, "Please login.")
         return redirect('login')
+    
+    elif request.user.is_staff:
+        messages.error(request, "Admin cannot access cart.")
+        return redirect('home')
 
     customer = request.user.customer_profile
 

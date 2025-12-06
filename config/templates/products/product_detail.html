@@ -63,23 +63,25 @@
             {{ product.description }}
         </p>
 
-        <a href="{% url 'add_to_cart' product.id %}"
-            style="
-                display:inline-block;
-                padding:12px 26px;
-                background:#2563EB;
-                color:white;
-                text-decoration:none;
-                font-size:16px;
-                font-weight:600;
-                border-radius:10px;
-                transition:0.3s;
-                box-shadow:0 4px 10px rgba(0,0,0,0.15);
-            "
-            onmouseover="this.style.background='#1E40AF'"
-            onmouseout="this.style.background='#2563EB'">
-            Add to Cart
-        </a>
+        {% if not user.is_staff %}
+            <a href="{% url 'add_to_cart' product.id %}"
+                style="
+                    display:inline-block;
+                    padding:12px 26px;
+                    background:#2563EB;
+                    color:white;
+                    text-decoration:none;
+                    font-size:16px;
+                    font-weight:600;
+                    border-radius:10px;
+                    transition:0.3s;
+                    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+                "
+                onmouseover="this.style.background='#1E40AF'"
+                onmouseout="this.style.background='#2563EB'">
+                Add to Cart
+            </a>
+        {% endif %}
 
         <!-- Product edit button(Admin feature) -->
          {% if user.is_authenticated and user.is_staff %}
