@@ -1,7 +1,8 @@
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ce64e62f-9208-46fd-b562-ee1f77068f4f" />
 # 🛒 Django E-Commerce Website  
 A clean and fully-functional E-Commerce web application built using Django.  
 Features include product management, cart system, checkout flow, customer accounts, and admin order management.
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ce64e62f-9208-46fd-b562-ee1f77068f4f" />
+
 
 ---
 
@@ -70,13 +71,39 @@ Features include product management, cart system, checkout flow, customer accoun
 - **Django Contrib Humanize**  
 
 ---
+###🔑 Admin creation
+- sign up and login as normal user
+- from django.contrib.auth.models import User
 
-## 📂 Project Structure
+u = User.objects.get(username="your username or email")  # change if needed
 
+u.is_staff = True
 
-## 🧠 Mind Map  
+u.is_superuser = True
+
+u.save()
+
+---
+
+---
+
+###📂 Project Structure
+<img width="1024" height="1536" alt="foldee structure" src="https://github.com/user-attachments/assets/01acba2f-ebaa-4469-ab01-b5c129be169b" />
+
+---
+
+---
+###👨‍💻 Author
+
+Adhil C R
+Django Developer | Computer Engineering Student
+
+---
+
+###🧠 Mind Map  
 <img width="1406" height="1668" alt="Mind map (1)" src="https://github.com/user-attachments/assets/93bfed3e-749f-4939-a036-e541666ad34a" />
 
 
-## 🗂 ERD Flowchart  
-( https://github.com/Adhil-cr/E-Commerce-Web/blob/fc9ac19617369226106c4684590de85af1da94ec/Data%20model%20Flowchart%20ERD.png )
+###🗂 ERD Flowchart  
+<img width="1008" height="1651" alt="Data model Flowchart ERD (1)" src="https://github.com/user-attachments/assets/fb9cb5d8-2193-4332-a4cc-cc97bcb9054f" />
+
