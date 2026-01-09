@@ -22,12 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8^wt0p&9*0a+rc93i@hgka%qa6bjz7me0b*p+@pm7x(^!f%4eo'
+# SECRET_KEY = 'django-insecure-8^wt0p&9*0a+rc93i@hgka%qa6bjz7me0b*p+@pm7x(^!f%4eo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.environ.get("lig-p(wl9=c9@y#c&j!w#$o9@j)9@8rjga*^-p)36@6takr*6r")
+ALLOWED_HOSTS = [
+    "techhive-c9on.onrender.com",
+]
 
 
 # Application definition
@@ -86,11 +89,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get(
-            'DATABASE_URL',
-            'postgres://myuser:password@localhost:5432/e_commerce'
-        )
+    "default": dj_database_url.config(
+        default="sqlite:///db.sqlite3",
+        conn_max_age=600,
+        ssl_require=True,
     )
 }
 
