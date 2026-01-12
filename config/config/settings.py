@@ -27,10 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-SECRET_KEY = os.environ.get("lig-p(wl9=c9@y#c&j!w#$o9@j)9@8rjga*^-p)36@6takr*6r")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 ALLOWED_HOSTS = [
     "techhive-c9on.onrender.com",
-]
+] 
 
 
 # Application definition
