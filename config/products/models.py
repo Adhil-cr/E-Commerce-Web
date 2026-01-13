@@ -1,4 +1,6 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
+
 
 # Model for products
 class Product(models.Model):
@@ -9,7 +11,7 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10,decimal_places=2)
     description = models.TextField(max_length=200)
-    product_image = models.ImageField(upload_to='products/')
+    product_image = CloudinaryField('image')
 
     priority = models.IntegerField(default=0)
     delete_status = models.IntegerField(choices=DELETE_CHOICES,default=LIVE,db_index=True)
