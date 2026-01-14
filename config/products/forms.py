@@ -23,8 +23,9 @@ class ProductForm(forms.ModelForm):
                 'class': 'input-field',
                 'placeholder': 'Priority (higher shows first)'
             }),
+            # Commented this filed during production we used Cloudinary 
             # product_image will be handled by the template file input; giving it a class helps
-            'product_image': forms.FileInput(attrs={
-                'class': 'file-input'
-            }),
+            # 'product_image': forms.FileInput(attrs={
+            #     'class': 'file-input'
+            # }),
         }
